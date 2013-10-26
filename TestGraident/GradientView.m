@@ -90,6 +90,19 @@
 	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
 	CGContextRestoreGState(ctx);
 	CGContextDrawPath(ctx, kCGPathStroke);
+	CGContextSaveGState(ctx);
+	startPoint = CGPointMake(0, self.lineWidth);
+	endPoint = CGPointMake(self.lineWidth, self.lineWidth);
+	CGContextBeginPath(ctx);
+    CGContextMoveToPoint   (ctx, 0, 0);  // top left
+    CGContextAddLineToPoint(ctx,0,self.lineWidth);  // mid right
+    CGContextAddLineToPoint(ctx, self.lineWidth	, self.lineWidth);  // bottom left
+    CGContextClosePath(ctx);
+    CGContextClip(ctx);
+	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
+	CGContextRestoreGState(ctx);
+	CGContextDrawPath(ctx, kCGPathStroke);
+	
 }
 
 - (void)drawTriangle:(CGContextRef)ctx withGradient:(CGGradientRef)gradient withStartPoint:(CGFloat)startX
@@ -106,16 +119,40 @@
 	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
 	CGContextRestoreGState(ctx);
 	CGContextDrawPath(ctx, kCGPathStroke);
+	CGContextSaveGState(ctx);
+	startPoint = CGPointMake(startX+self.lineWidth,self.lineWidth);
+	endPoint = CGPointMake(startX, self.lineWidth);
+	CGContextBeginPath(ctx);
+    CGContextMoveToPoint   (ctx, startX, self.lineWidth);  // top left
+    CGContextAddLineToPoint(ctx,startX+self.lineWidth,0);  // mid right
+    CGContextAddLineToPoint(ctx, startX+self.lineWidth, self.lineWidth);  // bottom left
+    CGContextClosePath(ctx);
+    CGContextClip(ctx);
+	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
+	CGContextRestoreGState(ctx);
+	CGContextDrawPath(ctx, kCGPathStroke);
 }
 - (void)drawTriangle:(CGContextRef)ctx withGradient:(CGGradientRef)gradient withY:(CGFloat)y andX:(CGFloat)x
 {
 	CGContextSaveGState(ctx);
-	CGPoint startPoint =  CGPointMake(x+self.lineWidth, y);
-	CGPoint endPoint =CGPointMake(x, y);
+	CGPoint startPoint =  CGPointMake(x, y);
+	CGPoint endPoint =CGPointMake(x, y-self.lineWidth);
 	CGContextBeginPath(ctx);
     CGContextMoveToPoint   (ctx, x+self.lineWidth, y);  // top left
     CGContextAddLineToPoint(ctx,x, y);  // mid right
     CGContextAddLineToPoint(ctx,x	, y-self.lineWidth);  // bottom left
+    CGContextClosePath(ctx);
+    CGContextClip(ctx);
+	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
+	CGContextRestoreGState(ctx);
+	CGContextDrawPath(ctx, kCGPathStroke);
+	CGContextSaveGState(ctx);
+	 startPoint =CGPointMake(x+self.lineWidth, y-self.lineWidth);
+	 endPoint =CGPointMake(x, y-self.lineWidth);
+	CGContextBeginPath(ctx);
+    CGContextMoveToPoint   (ctx, x, y-self.lineWidth);  // top left
+    CGContextAddLineToPoint(ctx,x+self.lineWidth, y);  // mid right
+    CGContextAddLineToPoint(ctx,x+self.lineWidth	, y-self.lineWidth);  // bottom left
     CGContextClosePath(ctx);
     CGContextClip(ctx);
 	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
@@ -131,6 +168,18 @@
     CGContextMoveToPoint   (ctx, 0, y);  // top left
     CGContextAddLineToPoint(ctx,self.lineWidth, y);  // mid right
     CGContextAddLineToPoint(ctx, self.lineWidth	, y-self.lineWidth);  // bottom left
+    CGContextClosePath(ctx);
+    CGContextClip(ctx);
+	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
+	CGContextRestoreGState(ctx);
+	CGContextDrawPath(ctx, kCGPathStroke);
+	CGContextSaveGState(ctx);
+	 startPoint = CGPointMake(0	, y);
+	 endPoint = CGPointMake(self.lineWidth, y);
+	CGContextBeginPath(ctx);
+    CGContextMoveToPoint   (ctx, self.lineWidth	, y-self.lineWidth);  // top left
+    CGContextAddLineToPoint(ctx,0, y-self.lineWidth);  // mid right
+    CGContextAddLineToPoint(ctx, 0	, y);  // bottom left
     CGContextClosePath(ctx);
     CGContextClip(ctx);
 	CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
@@ -171,7 +220,7 @@
 	[self drawTriangle:context withGradient:gradient withStartPoint:rect.size.width-self.lineWidth];
 	
 	[self drawTriangle:context withGradient:gradient withY:rect.size.height];
-	[self drawTriangle:context withGradient:rgradient withY:rect.size.height andX:rect.size.width-self.lineWidth];
+	[self drawTriangle:context withGradient:gradient withY:rect.size.height andX:rect.size.width-self.lineWidth];
     [self drawLineInContext:context
                        from:CGPointMake(self.lineWidth,
                                         rect.size.height - self.lineWidth / 2.0)
