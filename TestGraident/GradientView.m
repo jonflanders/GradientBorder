@@ -46,7 +46,7 @@
     if (self) {
         _radius = 0.0;
         _lineWidth = 14.0;
-        _offset = CGPointMake(0.0, -2.0);
+        _offset = CGPointMake(0.0, 0.0);
     }
     return self;
 }
@@ -106,7 +106,16 @@
                          to:CGPointMake(rect.size.width,
                                         self.lineWidth / 2.0)
               usingGradient:gradient];
+	// bottom
 	
+	
+    [self drawLineInContext:context
+                       from:CGPointMake(0,
+                                        rect.size.height - self.lineWidth / 2.0)
+                         to:CGPointMake(rect.size.width,
+                                        rect.size.height - self.lineWidth / 2.0)
+              usingGradient:rgradient];
+
     // left
 	
     [self drawLineInContext:context
@@ -125,16 +134,7 @@
               usingGradient:rgradient];
 	
   	
-    // bottom
-	
-	
-    [self drawLineInContext:context
-                       from:CGPointMake(0,
-                                        rect.size.height - self.lineWidth / 2.0)
-                         to:CGPointMake(rect.size.width,
-                                        rect.size.height - self.lineWidth / 2.0)
-              usingGradient:rgradient];
-	
+    
   
     
 }
